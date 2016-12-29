@@ -1,0 +1,32 @@
+* {
+  padding = 0;
+  margin =0;
+}
+
+h1 {
+  text-align: center;
+}
+
+.form-group {
+  padding: 0 10px 0 10px;
+}
+
+.form-control {
+  padding-top: 10px;
+}
+
+.icons-container-left {
+  float: right;
+}
+
+.icons-container-right {
+  float: left;
+}
+
+.icon {
+  padding-left: 20px;
+}
+
+th, td {
+  text-align:center;
+}

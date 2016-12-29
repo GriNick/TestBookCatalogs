@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="TestApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Test web page</title>
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+	<link rel="stylesheet" href="bower_components/angular-bootstrap/dist/css/ui-bootstrap-csp.css" />
+	<link rel="stylesheet" href ="bower_components/angular-ui-select/dist/select.css"/>
+	<link rel="stylesheet" href="style/style.css" />
+
+	<script type="text/javascript" src ="bower_components/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src ="bower_components/angular/angular.js"></script>
+	<script type="text/javascript" src ="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<script type="text/javascript" src ="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script type="text/javascript" src ="bower_components/angular-ui-select/dist/select.js"></script>
+	<script type="text/javascript" src ="js/api.js"></script>
+	<script type="text/javascript" src ="js/app.js"></script>
+	<body>
+		<div class="container" ng-controller="MyCtrl as $ctrl">
+			<div class="row">
+				<h1>Books catalog</h1>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<table class ="table">
+						<tr colspan ="4">
+							<th> Private catalog</th>
+						</tr>
+						<tr>
+							<th>Name</th>
+							<th>Author</th>
+							<th>Date</th>
+							<th>Possible actions</th>
+						</tr>
+						<tr ng-repeat = "book in catalog | filter : { type: 1}" >
+							<td> {{book.name}} </td>
+							<td> {{book.author}}</td>
+							<td> {{book.dt}} </td>
+							<td>
+							  <span class = "icons-container-left">
+							    <a href = "" ng-click ="openEditDialog(book)" title ="press to edit the book info" ><span class ="icon glyphicon glyphicon-edit"></span> </a>
+									<a href = "" ng-click ="deleteBook(book, catalog.indexOf(book))" title ="press to delete the book" ><span class ="icon glyphicon glyphicon-remove"></span> </a>
+									<a href ="" ng-click ="changeType(book)" title = "press to move the book to another catalog"><span class ="icon glyphicon glyphicon-arrow-right"></span> </a>
+								</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-6">
+					<table class = "table">
+						<tr colspan ="4">
+							<th> Public catalog</th>
+						</tr>
+						<tr>
+							<th>Possible actions</th>
+							<th>Name</th>
+							<th>Author</th>
+							<th>Date</th>
+
+						</tr>
+						<tr ng-repeat = "book in catalog | filter : { type: 2}" >
+							<td>
+								<span class="icons-container-right">
+								<a href = "" ng-click ="changeType(book)" title = "press to move the book to another catalog"><span class ="icon glyphicon glyphicon-arrow-left"></span> </a>
+								<a href = "" ng-click ="deleteBook(book, catalog.indexOf(book))" title ="press to delete the book" ><span class ="icon glyphicon glyphicon-remove"></span> </a>
+								<a href = "" ng-click ="openEditDialog(book)" title ="press to edit the book info" ><span class ="icon glyphicon glyphicon-edit"></span> </a>
+							</span>
+						</td>
+
+							<td> {{book.name}} </td>
+							<td> {{book.author}} </td>
+							<td> {{book.dt}}</td>
+
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class ="row">
+				<button type="button" class="btn btn-primary btn-lg" ng-click="$ctrl.openAddDialog()" >Add book</button>
+		    <script type="text/ng-template" id="modalEditBook.html">
+		        <form name =  "formModal">
+			        <div class="modal-header">
+			            <h3 class="modal-title" id="modal-title">Add / Edit book</h3>
+			        </div>
+
+							<div class="form-group">
+							  <!-- <label for="namer">Name:</label> -->
+							  <input placeholder="Name" name="name" type="text" class="form-control" ng-model="newBook.name" ng-required = "true">
+							</div>
+							<div class="form-group">
+							  <!-- <label for="author">Author:</label> -->
+							  <input placeholder="Author" name="author" type="text" class="form-control" ng-model="newBook.author" ng-required ="true">
+							</div>
+							<div class="form-group">
+					        <p class="input-group">
+					          <input  placeholder="Date" uib-datepicker-popup="yyyy-MM-dd"  type="text" class="form-control" ng-model="newBook.dt" is-open="datePicker.opened"  ng-required="true" close-text="Close" />
+					          <span class="input-group-btn">
+					            <button type="button" class="btn btn-default" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>
+					          </span>
+					        </p>
+							</div>
+							<div class="form-group">
+						    <ui-select  ng-model="newBook.catalog" theme="bootstrap">
+						        <ui-select-match placeholder="Catalog type">{{$select.selected.type}}</ui-select-match>
+						        <ui-select-choices repeat="catalog in catalogTypes | filter: $select.search track by catalog.type">
+						            <div ng-bind="catalog.type | highlight: $select.search"></div>
+						        </ui-select-choices>
+						    </ui-select>
+					  	</div>
+			        <div class="modal-footer">
+			            <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()" ng-disabled="formModal.$invalid">OK</button>
+			            <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+			        </div>
+		       </form>
+		    </script>
+			</div>
+		</div>
+	</body>
+</head>
+<body>
+
+</body>
+</html>
