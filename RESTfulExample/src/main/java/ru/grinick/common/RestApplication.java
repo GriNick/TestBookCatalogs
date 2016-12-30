@@ -10,19 +10,19 @@ public class RestApplication extends Application {
 	private Set<Object> singletons = new HashSet<Object>();
 
 	public RestApplication() {
-		singletons.add(new RestService());
+/*		singletons.add(new RestService());
         CorsFilter corsFilter = new CorsFilter();
         corsFilter.getAllowedOrigins().add("*");
         corsFilter.setAllowCredentials(true);
         corsFilter.setAllowedMethods("GET, POST, PUT, DELETE, OPTIONS, HEAD");
         corsFilter.setAllowedHeaders("origin, content-type, accept, authorization, cache-control");
         corsFilter.setCorsMaxAge(1209600);
-        singletons.add(corsFilter);		
+        singletons.add(corsFilter);	*/
 	}
 
 	@Override
 	public Set<Object> getSingletons() {
 		return singletons;
 	}
-	
+
 }

@@ -18,25 +18,55 @@ import javax.ws.rs.core.Response;
 @Produces("application/json")
 public class RestService {
 	private CatalogFactory catalogFactory = CatalogFactory.getInstance();
-	
-	
+
+	@OPTIONS
+	public Response options_headers() {
+		List<Book> list = catalogFactory.getCatalog().getBooks(0);
+	    return Response
+	            .status(200)
+            .header("Access-Control-Allow-Origin", "*")
+            .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization, cache-control")
+            .header("Access-Control-Allow-Credentials", "true")
+            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+            .header("Access-Control-Max-Age", "1209600")
+	            .build();
+	}
+
 	@GET
 	public Response getFullCatalog() {
 		List<Book> list = catalogFactory.getCatalog().getBooks(0);
 	    return Response
 	            .status(200)
 	            .entity(list)
+            .header("Access-Control-Allow-Origin", "*")
+            .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization, cache-control")
+            .header("Access-Control-Allow-Credentials", "true")
+            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+            .header("Access-Control-Max-Age", "1209600")
 	            .build();
 	}
-	
+
+	@OPTIONS
+	@Path("/book")
+	public Response options_headers1() {
+		List<Book> list = catalogFactory.getCatalog().getBooks(0);
+	    return Response
+	            .status(200)
+            .header("Access-Control-Allow-Origin", "*")
+            .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization, cache-control")
+            .header("Access-Control-Allow-Credentials", "true")
+            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+            .header("Access-Control-Max-Age", "1209600")
+	            .build();
+	}
 
 	@POST
 	@Path("/book")
-	@Consumes("application/json")	
+	@Consumes("application/json")
 	public Response createBook(Book book) {
 		UUID uuid;
 		RestResponse response = new RestResponse();
-		System.out.println("in createBook, trying to add the  book - " + book);	
+		System.out.println("in createBook, trying to add the  book - " + book);
 		if (book.getId() == null) {
 			uuid = UUID.randomUUID();
 			book.setId(uuid);
@@ -50,11 +80,17 @@ public class RestService {
 			response.setSuccess(0);
 			response.setMessage("Cannot add new book");
 		}
-		return Response.status(201).entity(response).build();
-	}	
+		return Response.status(201).entity(response)
+            .header("Access-Control-Allow-Origin", "*")
+            .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization, cache-control")
+            .header("Access-Control-Allow-Credentials", "true")
+            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+            .header("Access-Control-Max-Age", "1209600")
+		.build();
+	}
 	@PUT
 	@Path("/book")
-	@Consumes("application/json")	
+	@Consumes("application/json")
 	public Response updateBook(Book book) {
 		RestResponse response = new RestResponse();
 		int result = catalogFactory.getCatalog().updateBook(book);
@@ -65,12 +101,18 @@ public class RestService {
 			response.setSuccess(0);
 			response.setMessage("Cannot update the book");
 		}
-		return Response.status(200).entity(response).build();
+		return Response.status(200).entity(response)
+            .header("Access-Control-Allow-Origin", "*")
+            .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization, cache-control")
+            .header("Access-Control-Allow-Credentials", "true")
+            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+            .header("Access-Control-Max-Age", "1209600")
+		.build();
 	}
-	
+
 	@DELETE
 	@Path("/book/{id}")
-	public Response deleteBook(@PathParam("id") String uId) {		
+	public Response deleteBook(@PathParam("id") String uId) {
 		UUID id;
 		RestResponse response = new RestResponse();
 
@@ -90,8 +132,14 @@ public class RestService {
 			response.setSuccess(0);
 			response.setMessage("Cannot delete the book");
 		}
-		return Response.status(200).entity(response).build();
-	}	
-	
-	
+		return Response.status(200).entity(response)
+            .header("Access-Control-Allow-Origin", "*")
+            .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization, cache-control")
+            .header("Access-Control-Allow-Credentials", "true")
+            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+            .header("Access-Control-Max-Age", "1209600")
+		.build();
+	}
+
+
 }
